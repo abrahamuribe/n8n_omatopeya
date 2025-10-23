@@ -1,0 +1,119 @@
+{
+  "name": "n8n-Omatopeya",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "html",
+        "binaryPropertyName": "={{ $json.content.parts[0].text }}",
+        "options": {
+          "fileName": "salida.html"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        -144
+      ],
+      "id": "b301747a-997f-4747-add0-de5cdbaf2907",
+      "name": "Pasar HTML"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash-lite-preview-06-17",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash-lite-preview-06-17"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Que omatopeya hace un  {{ $json['nombre a un animal'] }} solo escribre en una palabra ese sonido "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -144
+      ],
+      "id": "a7b13137-9e3d-418c-8573-931e4202066c",
+      "name": "Gemini Omatopeya",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "q3MyfTZb6sAKkaLc",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Lab_01",
+        "formDescription": "prueba de formulario n8n",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "nombre a un animal",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -416,
+        -144
+      ],
+      "id": "49707cf0-9714-4387-986f-e181d85a1ce5",
+      "name": "Formulario Animal Nombre",
+      "webhookId": "9a84d99f-b929-467a-b4e5-61e18c80830e"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Pasar HTML": {
+      "main": [
+        []
+      ]
+    },
+    "Gemini Omatopeya": {
+      "main": [
+        [
+          {
+            "node": "Pasar HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formulario Animal Nombre": {
+      "main": [
+        [
+          {
+            "node": "Gemini Omatopeya",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "dca20a0b-a0b1-4645-8690-98d7961c4112",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4a2e4a2bc89b2dab426b4400e592342ff43c7ca838c874f846c40151680f6d5e"
+  },
+  "id": "spoLsVYCfKadMrXj",
+  "tags": []
+}
